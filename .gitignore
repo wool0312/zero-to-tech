@@ -1,5 +1,8 @@
 temporary_note.md
 
+node_modules
+dist
+
 *~
 *.un~
 .*.un~
