@@ -1,20 +1,19 @@
 {
-  "name": "libo-ai-full-stack",
-  "version": "1.0.0",
-  "type": "module",
+  "name": "zero-to-tech-4-5",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.5",
-    "vite": "^8.2.1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "animejs": "^4.5.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "animejs": "^4.4.1",
+    "next": "^15.0.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true
   }
 }

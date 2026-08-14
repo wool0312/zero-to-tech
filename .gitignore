@@ -1,8 +1,25 @@
-temporary_note.md
+# dependencies
+node_modules/
 
-node_modules
-dist
+# next.js
+.next/
+out/
+
+# production
+build/
+dist/
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+
+# misc
+.DS_Store
+*.log
+.env*
 
 *~
 *.un~
 .*.un~
+
+temporary_note.md
