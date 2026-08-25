@@ -17,14 +17,33 @@ dist/
 .DS_Store
 *.log
 .env*
+!.env.example
 
-backend/.venv
-backend/__pycache__/
-*.pyc
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-
+# editor temporary files
 *~
 *.un~
 .*.un~
-
 temporary_note.md
+
+# runtime data
+/history.json
+/backend/history.json
+/backend/data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# IDE
+.idea/

@@ -1,0 +1,16 @@
+[Unit]
+Description=Zero to Tech FastAPI backend
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/zero-to-tech
+Environment=DATABASE_PATH=/var/lib/zero-to-tech/app.db
+ExecStart=/srv/zero-to-tech/backend/.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
