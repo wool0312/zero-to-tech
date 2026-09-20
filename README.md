@@ -24,6 +24,8 @@ deploy/              Nginx 和 systemd 部署模板
 
 SQLite 默认创建在 `backend/data/app.db`。数据库和 WAL 临时文件属于运行数据，不会提交到 Git。
 
+SQLite 的逐步代码讲解见 [SQLite 学习笔记](docs/sqlite-learning-notes.md)。
+
 ## 本地开发
 
 环境要求：Node.js 20+、Python 3.11+。
