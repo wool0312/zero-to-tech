@@ -1,158 +1,109 @@
-# Zero to Tech
+# 文字实验室
 
-一个使用 Next.js、FastAPI 和 SQLite 构建的中文文本分析小应用。前端展示个人主页和文字实验室；后端提供拼音、情感分析和最近分析记录查询。
+一个中文文本分析小工具：输入一段话，给出情感倾向评分和全文拼音，
+并把每次分析的结果存下来，各人只看得到自己的那一份。
+
+零到全栈课程的贯穿项目。
 
 ## 技术栈
 
-- Next.js 15、React 19、Anime.js
-- FastAPI、SnowNLP、pypinyin
-- SQLite（Python 标准库，无需单独安装数据库服务）
+- 前端：Next.js（静态导出）＋ React
+- 后端：FastAPI ＋ uvicorn
+- 分析：snownlp（情感）、pypinyin（注音）
+- 存储：SQLite
+- 线上：Nginx
 
-## 项目结构
+## 本地跑起来
 
-```text
-app/                 Next.js 页面
-components/          React 组件
-css/                 页面样式
-data/                前端展示数据
-backend/
-  main.py            FastAPI 应用和接口
-  database.py        SQLite 初始化与读写
-  requirements.txt   后端直接依赖
-deploy/              Nginx 和 systemd 部署模板
-```
+需要：Node.js 18+、Python 3.10+
 
-SQLite 默认创建在 `backend/data/app.db`。数据库和 WAL 临时文件属于运行数据，不会提交到 Git。
-
-SQLite 的逐步代码讲解见 [SQLite 学习笔记](docs/sqlite-learning-notes.md)。
-
-## 本地开发
-
-环境要求：Node.js 20+、Python 3.11+。
-
-1. 创建本地环境文件：
-
-   ```powershell
-   Copy-Item .env.example .env.local
-   ```
-
-2. 安装并启动后端（命令均在仓库根目录执行）：
-
-   ```powershell
-   python -m venv backend/.venv
-   .\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
-   .\backend\.venv\Scripts\python.exe -m uvicorn backend.main:app --reload --port 8000
-   ```
-
-3. 在另一个终端启动前端：
-
-   ```powershell
-   npm install
-   npm run dev
-   ```
-
-4. 打开 <http://localhost:3000>。API 文档位于 <http://127.0.0.1:8000/docs>。
-
-Linux/macOS 激活虚拟环境后，也可以使用：
+**后端**
 
 ```bash
-python3 -m venv backend/.venv
-backend/.venv/bin/pip install -r backend/requirements.txt
-backend/.venv/bin/python -m uvicorn backend.main:app --reload --port 8000
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # 按下面「配置说明」填好
+fastapi dev                   # → http://localhost:8000
 ```
 
-## 环境变量
-
-复制 `.env.example` 为 `.env.local` 后按需修改：
-
-| 变量 | 用途 | 默认值 |
-| --- | --- | --- |
-| `NEXT_PUBLIC_API_BASE_URL` | 浏览器访问后端的地址；生产环境同域反向代理时留空 | 空 |
-| `CORS_ORIGINS` | 允许直接访问 API 的前端来源，多个值用逗号分隔 | 本地 3000 端口 |
-| `DATABASE_PATH` | SQLite 文件路径；相对路径从仓库根目录解析 | `backend/data/app.db` |
-
-`NEXT_PUBLIC_API_BASE_URL` 会在前端构建时写入产物，修改后必须重新执行 `npm run build`。
-
-## API
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| GET | `/api/health` | 服务健康检查 |
-| GET | `/api/profile` | 获取主页内容 |
-| POST | `/api/analyze` | 分析中文文本并写入 SQLite |
-| GET | `/api/history?limit=10` | 查询最近的分析记录，最多 100 条 |
-
-`analysis_history` 表会在后端启动时自动创建，包含 `id`、`text`、`score`、`label`、`pinyin` 和 `created_at` 字段。
-
-## 生产构建
+**前端**（另开一个终端）
 
 ```bash
-npm ci
-NEXT_PUBLIC_API_BASE_URL= npm run build
-
-python3 -m venv backend/.venv
-backend/.venv/bin/pip install --upgrade pip
-backend/.venv/bin/pip install -r backend/requirements.txt
+npm install
+cp .env.example .env.local    # 按下面「配置说明」填好
+npm run dev                   # → http://localhost:3000
 ```
 
-构建完成后，可分别验证两个服务：
+## 部署到服务器
+
+前提：服务器上已装好 Python 3.10+、Node.js 18+ 和 Nginx，
+且 Nginx 的站点根目录已指向本项目的 `out/`、监听 80 端口。
+
+**1. 拉取代码**
 
 ```bash
-npm start
-backend/.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+cd ~/zero-to-tech
+git pull
 ```
 
-## Linux 单机部署
-
-仓库提供了 Nginx 和 systemd 模板，默认假设代码位于 `/srv/zero-to-tech`，服务用户为 `www-data`。
-
-1. 克隆或更新代码并完成上面的生产构建。
-2. 创建持久化数据库目录：
-
-   ```bash
-   sudo install -d -o www-data -g www-data /var/lib/zero-to-tech
-   ```
-
-3. 检查并修改 `deploy/` 中的域名、代码路径和服务用户，然后安装配置：
-
-   ```bash
-   sudo cp deploy/zero-to-tech-backend.service /etc/systemd/system/
-   sudo cp deploy/zero-to-tech-frontend.service /etc/systemd/system/
-   sudo cp deploy/nginx.conf.example /etc/nginx/sites-available/zero-to-tech
-   sudo ln -s /etc/nginx/sites-available/zero-to-tech /etc/nginx/sites-enabled/zero-to-tech
-   sudo systemctl daemon-reload
-   sudo systemctl enable --now zero-to-tech-backend zero-to-tech-frontend
-   sudo nginx -t
-   sudo systemctl reload nginx
-   ```
-
-4. 验证部署：
-
-   ```bash
-   curl http://127.0.0.1:8000/api/health
-   curl -I http://127.0.0.1:3000
-   curl https://example.com/api/health
-   ```
-
-以后更新版本：
+**2. 前端：装依赖、写配置、构建**
 
 ```bash
-cd /srv/zero-to-tech
-git pull --ff-only
-npm ci
-NEXT_PUBLIC_API_BASE_URL= npm run build
-backend/.venv/bin/pip install -r backend/requirements.txt
-sudo systemctl restart zero-to-tech-backend zero-to-tech-frontend
+npm install
+cp .env.example .env.production   # 按下面「配置说明」填好
+npm run build                     # 产物进 out/，由 Nginx 提供服务
 ```
 
-生产环境应配置 HTTPS。SQLite 适合单机、小流量部署；扩展到多台后端服务器前，应迁移到 PostgreSQL 等独立数据库。
-
-## 提交前检查
+**3. 后端：建环境、装依赖、写配置**
 
 ```bash
-npm run build
-git diff --check
-git status --short
+cd backend
+python3 -m venv --prompt=zero-to-tech .venv   # 首次部署才需要
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env              # 按下面「配置说明」填好
 ```
 
-确认 `.env.local`、`backend/data/`、虚拟环境和构建产物没有出现在待提交列表中，再执行 `git add`、`git commit` 和 `git push`。
+**4. 后端：在后台跑起来**
+
+```bash
+nohup .venv/bin/fastapi run > backend.log 2>&1 &
+```
+
+`fastapi run` 是生产模式，监听 `0.0.0.0:8000`；`nohup ... &` 让它在
+SSH 断开后继续运行，日志写进 `backend.log`。
+
+查看日志、停止服务：
+
+```bash
+tail -f backend.log           # 看日志
+ps aux | grep fastapi         # 找到进程号
+kill 进程号                    # 停掉
+```
+
+**5. 放行 8000 端口**
+
+去云平台控制台的安全组 / 防火墙，放行 8000 端口（80 端口应该已经放行）。
+
+**6. 验证**
+
+浏览器访问 `http://服务器IP`，打开文字实验室做一次分析，再看历史记录。
+换一个浏览器（或无痕窗口）再试一次，两边的历史记录应该是互相看不到的。
+
+## 配置说明
+
+配置文件不进 Git，请照着 `.env.example` 自己建一份。
+
+**前端**：开发用 `.env.local`，生产构建用 `.env.production`
+
+| 键 | 说明 | 本地 | 线上 |
+| --- | --- | --- | --- |
+| `NEXT_PUBLIC_API_BASE_URL` | 后端接口地址 | `http://localhost:8000` | `http://服务器IP:8000` |
+
+**后端**：`backend/.env`
+
+| 键 | 说明 | 本地 | 线上 |
+| --- | --- | --- | --- |
+| `ALLOWED_ORIGINS` | 允许跨源访问的前端地址，多个用逗号隔开 | `http://localhost:3000` | `http://服务器IP`（不带端口） |
