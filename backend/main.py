@@ -13,14 +13,11 @@ from snownlp import SnowNLP
 from backend.database import init_database, insert_analysis, list_analyses
 import uuid
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env.local")
-
+load_dotenv(Path(__file__).parent / ".env")
 
 def get_cors_origins() -> list[str]:
     configured_origins = os.getenv(
-        "CORS_ORIGINS",
-        "http://localhost:3000,http://127.0.0.1:3000",
+        "ALLOWED_ORIGINS"
     )
     return [origin.strip() for origin in configured_origins.split(",") if origin.strip()]
 
