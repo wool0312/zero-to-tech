@@ -12,29 +12,20 @@ import ResultCard from "./ResultCard.jsx";
 import HistoryModal from "./HistoryModal.jsx";
 import { textLab } from "../data/site.js";
 
-const API = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function TextLabView() {
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const [historyLoading, setHistoryLoading] = useState(false);
-  const [historyError, setHistoryError] = useState("");
 
   async function openHistory() {
     setHistoryOpen(true);
-    setHistoryLoading(true);
-    setHistoryError("");
     try {
-      const res = await fetch(`${API}/api/history`, {credentials: "include"});
-      if (!res.ok) throw new Error(`历史记录加载失败：${res.status}`);
-      const items = await res.json();
-      if (!Array.isArray(items)) throw new Error("历史记录返回格式不正确");
-      setHistory(items);
-    } catch (error) {
-      setHistoryError(error.message || "历史记录加载失败，请稍后重试");
-    } finally {
-      setHistoryLoading(false);
+      const res = await fetch(`${API}/api/history`);
+      setHistory(await res.json());
+    } catch {
+      // 后端没起来时不让页面崩掉，弹窗显示"还没有记录"
     }
   }
 
@@ -51,8 +42,6 @@ export default function TextLabView() {
       <HistoryModal
         open={historyOpen}
         items={history}
-        loading={historyLoading}
-        error={historyError}
         onClose={() => setHistoryOpen(false)}
       />
     </AnimatedCardGrid>

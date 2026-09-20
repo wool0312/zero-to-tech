@@ -16,7 +16,7 @@ function formatTime(iso) {
   });
 }
 
-export default function HistoryModal({ open, items, loading, error, onClose }) {
+export default function HistoryModal({ open, items, onClose }) {
   // 按 Esc 关闭
   useEffect(() => {
     if (!open) return;
@@ -43,11 +43,7 @@ export default function HistoryModal({ open, items, loading, error, onClose }) {
           </button>
         </div>
 
-        {loading ? (
-          <p className="history-empty" role="status">正在加载历史记录…</p>
-        ) : error ? (
-          <p className="lab-error" role="alert">{error}</p>
-        ) : items.length === 0 ? (
+        {items.length === 0 ? (
           <p className="history-empty">还没有记录，先分析一句试试。</p>
         ) : (
           <div className="history-list">
