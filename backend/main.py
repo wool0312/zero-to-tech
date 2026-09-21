@@ -17,9 +17,13 @@ load_dotenv(Path(__file__).parent / ".env")
 
 def get_cors_origins() -> list[str]:
     configured_origins = os.getenv(
-        "ALLOWED_ORIGINS"
+        "ALLOWED_ORIGINS",
+        "",
     )
-    return [origin.strip() for origin in configured_origins.split(",") if origin.strip()]
+    return [origin.strip() 
+            for origin in configured_origins.split(",") 
+            if origin.strip()
+    ]
 
 
 @asynccontextmanager
@@ -59,7 +63,7 @@ profile = {
         "linkLabel": "打开作品",
     },
     "identity": {
-        "motto": "已识乾坤大，尤怜草木青",
+        "motto": "有选择的地方就有艺术",
         "learning": "零到全栈",
     },
 }
