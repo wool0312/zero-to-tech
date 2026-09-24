@@ -5,9 +5,14 @@
   align-content: center;
 }
 
+.hero-stage-home {
+  min-height: 27vh;
+  padding-bottom: 4px;
+}
+
 .hero-topline {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 22px;
@@ -17,12 +22,26 @@
   max-width: 620px;
 }
 
-.brand-eyebrow {
-  color: rgba(29, 29, 31, 0.88);
-  font-size: 21px;
-  font-weight: 500;
-  line-height: 1.14;
-  letter-spacing: -0.03em;
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  width: clamp(112px, 14vw, 138px);
+  min-height: 44px;
+  border-radius: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.brand-logo:hover { opacity: 0.78; }
+
+.brand-logo:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
+}
+
+.brand-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hero-display {

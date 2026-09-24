@@ -2,7 +2,7 @@
 // 头像、简介、标签和详情入口都在这里修改；可选字段为空时会自动隐藏。
 export const profile = {
   avatar: {
-    src: "",
+    src: "/images/avatar.jpg",
     alt: "Wool 的个人头像",
     initials: "W",
   },
@@ -14,7 +14,7 @@ export const profile = {
   tags: [
     { id: "fullstack", label: "全栈探索", tone: "blue" },
     { id: "learning", label: "终身学习", tone: "purple" },
-    { id: "Arsenal-FC", label: "COYG", tone: "red" },
+    { id: "AIAgent", label: "Agent", tone: "red" },
   ],
   aboutLink: {
     label: "更多关于我",

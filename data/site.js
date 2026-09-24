@@ -7,7 +7,6 @@
 
 export const home = {
   heroTitle: "关于我",
-  heroSubtitle: "项目，创意，灵感，心得，我的作品",
   featuredWork: {
     kicker: "作品",
     title: "文字实验室",

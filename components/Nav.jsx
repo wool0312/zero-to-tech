@@ -18,7 +18,9 @@ export default function Nav() {
 
   return (
     <div className="hero-topline">
-      <p className="brand-eyebrow">wool space</p>
+      <Link className="brand-logo" href="/" aria-label="返回 Wool Space 首页">
+        <img src="/images/wool-logo.svg" alt="Wool Space" />
+      </Link>
       <nav className="inline-links hero-nav">
         {items.map((it) => {
           const active =

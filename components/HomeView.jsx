@@ -10,7 +10,7 @@ import { profile } from "../data/profile.js";
 export default function HomeView() {
   return (
     <AnimatedCardGrid className="dashboard-grid">
-      <article className="hero-stage panel-full">
+      <article className="hero-stage hero-stage-home panel-full">
         <Nav />
         <PageHeading title={home.heroTitle} subtitle={home.heroSubtitle} />
       </article>
