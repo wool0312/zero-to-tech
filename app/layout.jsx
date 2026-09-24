@@ -16,8 +16,8 @@ import "../css/lab.css";
 import "../css/responsive.css";
 
 export const metadata = {
-  title: "zero to tech",
-  description: "个人主页 + 文字实验室",
+  title: "Wool Space",
+  description: "一位正在成长、对世界保持好奇的全栈开发者。",
 };
 
 export default function RootLayout({ children }) {

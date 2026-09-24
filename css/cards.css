@@ -71,6 +71,175 @@
   line-height: 1;
 }
 
+/* === 个人介绍卡片 === */
+.profile-card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(240px, 0.78fr) minmax(0, 1.5fr);
+  gap: clamp(34px, 6vw, 72px);
+  align-items: center;
+  min-height: 340px;
+  padding: clamp(34px, 5vw, 56px);
+  overflow: hidden;
+  border: 1px solid rgba(29, 29, 31, 0.045);
+}
+
+.profile-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -120px;
+  top: -160px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 113, 227, 0.09), transparent 68%);
+  pointer-events: none;
+}
+
+.profile-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 244px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.profile-avatar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 86%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 7px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 68% 22%, rgba(255, 255, 255, 0.3), transparent 19%),
+    linear-gradient(145deg, #8bc7ff 0%, #4b8ee8 43%, #786fd5 100%);
+  box-shadow: 0 18px 45px rgba(60, 106, 184, 0.25);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar span {
+  font-size: clamp(70px, 10vw, 108px);
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  transform: translateX(-0.04em);
+}
+
+.profile-orbit {
+  position: absolute;
+  border: 1px solid rgba(0, 113, 227, 0.18);
+  border-radius: 50%;
+}
+
+.profile-orbit-one {
+  inset: 0;
+  border-right-color: transparent;
+  transform: rotate(-18deg);
+}
+
+.profile-orbit-two {
+  inset: 8% -3%;
+  border-top-color: transparent;
+  border-bottom-color: rgba(124, 91, 225, 0.2);
+  transform: rotate(28deg);
+}
+
+.profile-content {
+  min-width: 0;
+  padding-left: clamp(0px, 2.4vw, 30px);
+  border-left: 1px solid var(--border-soft);
+}
+
+.profile-eyebrow {
+  margin-bottom: 8px;
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+}
+
+.profile-headline {
+  max-width: 590px;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.profile-bio {
+  display: grid;
+  gap: 4px;
+  max-width: 610px;
+  margin-top: 18px;
+  color: var(--text-soft);
+  font-size: clamp(16px, 1.8vw, 19px);
+  line-height: 1.65;
+  letter-spacing: -0.015em;
+}
+
+.profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  list-style: none;
+}
+
+.profile-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.profile-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  color: currentColor;
+  background: currentColor;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 17%, transparent);
+}
+
+.profile-tag-blue { color: #126ac0; background: #eef6ff; }
+.profile-tag-purple { color: #7658d7; background: #f4f0ff; }
+.profile-tag-orange { color: #ad642e; background: #fff4eb; }
+.profile-tag-red { color: #c62828; background: #fff0f0;}
+
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 19px;
+  color: var(--brand);
+  font-size: 16px;
+  font-weight: 600;
+  transition: gap 0.2s ease, opacity 0.2s ease;
+}
+
+.profile-link:hover { gap: 14px; opacity: 0.82; }
+.profile-link:focus-visible { outline: 2px solid var(--brand); outline-offset: 5px; border-radius: 4px; }
+.profile-link-arrow { font-size: 19px; }
+
 /* === 身份 panel === */
 .identity-panel {
   display: grid;
@@ -97,3 +266,74 @@
   letter-spacing: -0.02em;
   font-weight: 500;
 }
+
+/* === 关于我详情页 === */
+.about-intro {
+  padding: clamp(34px, 5vw, 56px);
+  background:
+    radial-gradient(circle at 92% 8%, rgba(0, 113, 227, 0.09), transparent 30%),
+    var(--surface);
+}
+
+.about-intro h1 {
+  max-width: 700px;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+}
+
+.about-intro-copy {
+  display: grid;
+  gap: 6px;
+  max-width: 650px;
+  margin-top: 20px;
+  color: var(--text-soft);
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.65;
+}
+
+.about-detail {
+  position: relative;
+  min-height: 280px;
+  padding: 34px;
+  overflow: hidden;
+}
+
+.about-detail h2 {
+  max-width: 330px;
+  font-size: clamp(25px, 3.2vw, 35px);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+
+.about-detail > p:last-child {
+  max-width: 390px;
+  margin-top: 18px;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.about-index {
+  position: absolute;
+  right: 24px;
+  bottom: 8px;
+  color: rgba(0, 113, 227, 0.07);
+  font-size: 108px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.08em;
+}
+
+.about-back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 84px;
+  color: var(--brand);
+  font-size: 17px;
+  font-weight: 600;
+  transition: gap 0.2s ease;
+}
+
+.about-back:hover { gap: 15px; }

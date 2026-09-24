@@ -14,10 +14,6 @@ export const home = {
     copy: "拼音和情绪，挖掘中文里的细节",
     linkLabel: "打开作品",
   },
-  identity: {
-    motto: "有选择的地方就有艺术",
-    learning: "零到全栈",
-  },
 };
 
 export const textLab = {

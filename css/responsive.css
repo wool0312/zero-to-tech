@@ -2,6 +2,10 @@
   .panel-half { grid-column: span 12; }
   .result-grid { grid-template-columns: 1fr; }
   .identity-panel { grid-template-columns: 1fr; }
+  .profile-card {
+    grid-template-columns: minmax(150px, 0.58fr) minmax(0, 1.42fr);
+    gap: 28px;
+  }
   .lab-panel { min-height: auto; }
 }
 
@@ -23,4 +27,25 @@
   .identity-value,
   .result-badge strong { font-size: 24px; }
   .identity-quote { font-size: 20px; }
+  .profile-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    min-height: 0;
+    padding: 28px 22px 26px;
+  }
+  .profile-portrait { width: 150px; }
+  .profile-avatar { border-width: 5px; }
+  .profile-content {
+    padding-left: 0;
+    padding-top: 23px;
+    border-left: 0;
+    border-top: 1px solid var(--border-soft);
+  }
+  .profile-headline { font-size: 30px; }
+  .profile-bio { margin-top: 14px; font-size: 16px; }
+  .profile-tags { gap: 8px; margin-top: 18px; }
+  .profile-tag { min-height: 38px; padding: 8px 13px; font-size: 13px; }
+  .about-intro { padding: 28px 22px; }
+  .about-detail { min-height: 240px; padding: 26px 22px; }
+  .about-index { font-size: 84px; }
 }
